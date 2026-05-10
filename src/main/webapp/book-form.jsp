@@ -7,10 +7,9 @@
         .container { width: 50%; margin: 20px auto; font-family: Arial, sans-serif; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;}
+        .form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;}
         .btn { padding: 10px 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 4px;}
-        .btn-cancel {background-color: #f44336; color: white; text-decoration: none; padding: 10px 15px;border-radius: 4px;display: inline-block; font-size: 14px;
-                }
+        .btn-cancel {background-color: #f44336; color: white; text-decoration: none; padding: 10px 15px;border-radius: 4px;display: inline-block; font-size: 14px;}
     </style>
 </head>
 <body>
@@ -42,8 +41,14 @@
             </div>
 
             <div class="form-group">
-                <label>ID Бібліотеки (до якої належить):</label>
-                <input type="number" name="libraryId" value="${book != null ? book.libraryId : ''}" required />
+                <label>Бібліотека:</label>
+                <select name="libraryId" required>
+                    <c:forEach var="lib" items="${libraries}">
+                        <option value="${lib.id}" ${book != null && book.library.id == lib.id ? 'selected' : ''}>
+                            ${lib.name} (${lib.address})
+                        </option>
+                    </c:forEach>
+                </select>
             </div>
 
             <button type="submit" class="btn">Зберегти</button>

@@ -1,22 +1,19 @@
 package library.model;
 
-import java.util.Objects;
-
 public class Book {
     private int id;
     private String title;
     private String author;
     private int publishedYear;
-    private int libraryId;
-
+    private Library library;
     public Book() {}
 
-    public Book(int id, String title, String author, int publishedYear, int libraryId) {
+    public Book(int id, String title, String author, int publishedYear, Library library) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.publishedYear = publishedYear;
-        this.libraryId = libraryId;
+        this.library = library;
     }
 
     public int getId() { return id; }
@@ -31,6 +28,6 @@ public class Book {
     public int getPublishedYear() { return publishedYear; }
     public void setPublishedYear(int publishedYear) { this.publishedYear = publishedYear; }
 
-    public int getLibraryId() { return libraryId; }
-    public void setLibraryId(int libraryId) { this.libraryId = libraryId; }
+    public Library getLibrary() { return library; }
+    public void setLibrary(Library library) { this.library = library; }
 }

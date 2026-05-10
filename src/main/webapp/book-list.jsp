@@ -25,7 +25,8 @@
                 <th>Назва</th>
                 <th>Автор</th>
                 <th>Рік видання</th>
-                <th>ID Бібліотеки</th> <th>Дії</th>
+                <th>Бібліотека</th>
+                <th>Дії</th>
             </tr>
         </thead>
         <tbody>
@@ -35,7 +36,7 @@
                     <td>${book.title}</td>
                     <td>${book.author}</td>
                     <td>${book.publishedYear}</td>
-                    <td>${book.libraryId}</td>
+                    <td>${book.library.name}</td>
                     <td>
                         <a href="books?action=edit&id=${book.id}" class="btn btn-edit">Редагувати</a>
                         <a href="books?action=delete&id=${book.id}" class="btn btn-delete"

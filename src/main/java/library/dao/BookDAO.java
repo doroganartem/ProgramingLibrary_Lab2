@@ -2,6 +2,7 @@ package library.dao;
 
 import library.model.Book;
 import library.utils.DatabaseConnection;
+import library.model.Library;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ public class BookDAO {
 
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
-        String sql = "SELECT * FROM books";
+        String sql = "SELECT b.*, l.name as library_name, l.address as library_address " +
+                "FROM books b JOIN libraries l ON b.library_id = l.id";
 
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
@@ -23,7 +25,8 @@ public class BookDAO {
                 book.setTitle(rs.getString("title"));
                 book.setAuthor(rs.getString("author"));
                 book.setPublishedYear(rs.getInt("published_year"));
-                book.setLibraryId(rs.getInt("library_id"));
+                Library lib = new Library(rs.getInt("library_id"), rs.getString("library_name"), rs.getString("library_address"));
+                book.setLibrary(lib);
                 books.add(book);
             }
         } catch (SQLException e) {
@@ -41,7 +44,7 @@ public class BookDAO {
             pstmt.setString(1, book.getTitle());
             pstmt.setString(2, book.getAuthor());
             pstmt.setInt(3, book.getPublishedYear());
-            pstmt.setInt(4, book.getLibraryId());
+            pstmt.setInt(4, book.getLibrary().getId());
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -78,7 +81,8 @@ public class BookDAO {
                     book.setTitle(rs.getString("title"));
                     book.setAuthor(rs.getString("author"));
                     book.setPublishedYear(rs.getInt("published_year"));
-                    book.setLibraryId(rs.getInt("library_id"));
+                    Library lib = new Library(rs.getInt("library_id"), rs.getString("library_name"), rs.getString("library_address"));
+                    book.setLibrary(lib);
                 }
             }
         } catch (SQLException e) {
@@ -96,7 +100,7 @@ public class BookDAO {
             pstmt.setString(1, book.getTitle());
             pstmt.setString(2, book.getAuthor());
             pstmt.setInt(3, book.getPublishedYear());
-            pstmt.setInt(4, book.getLibraryId());
+            pstmt.setInt(4, book.getLibrary().getId());
             pstmt.setInt(5, book.getId()); // Важливо передати ID для умови WHERE
 
             pstmt.executeUpdate();
